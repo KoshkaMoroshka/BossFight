@@ -2,32 +2,35 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    private PlayerActions playerInput;
+    public PlayerActions PlayerInput { get; private set; }
     private PlayerActions.FootActions onFoot;
 
     private PlayerMovement movement;
     private PlayerLook look;
+    private PlayerInteractable interact;
     // Start is called before the first frame update
     private void Awake()
     {
-        playerInput = new PlayerActions();
-        onFoot = playerInput.Foot;
+        PlayerInput = new PlayerActions();
+        onFoot = PlayerInput.Foot;
 
         movement = GetComponent<PlayerMovement>();
         look = GetComponent<PlayerLook>();
+        interact = GetComponent<PlayerInteractable>();
 
         onFoot.Jump.performed += ctx => movement.Jump();
+        onFoot.Interact.performed += ctx => interact.Interact();
     }
 
     // Update is called once per frame
-    private void FixedUpdate()
+    private void Update()
     {
-        movement.ProcessMove(onFoot.Movement.ReadValue<Vector2>());
+        movement.ProcessMove(onFoot.Movement.ReadValue<Vector2>(), Time.deltaTime);
     }
 
     private void LateUpdate()
     {
-        look.ProcessLook(onFoot.Look.ReadValue<Vector2>());
+        look.ProcessLook(onFoot.Look.ReadValue<Vector2>(), Time.deltaTime);
     }
 
     private void OnEnable()

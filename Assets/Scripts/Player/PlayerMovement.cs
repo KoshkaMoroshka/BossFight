@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float Speed = 5f;
     public float Gravity = -9.8f;
-    public float jumpHeight = 3f;
+    public float JumpHeight = 3f;
     private void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -19,23 +19,23 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = controller.isGrounded;
     }
 
-    public void ProcessMove(Vector2 input)
+    public void ProcessMove(Vector2 input, float deltaTime)
     {
         Vector3 moveDirection = Vector3.zero;
         moveDirection.x = input.x;
         moveDirection.z = input.y;
-        controller.Move(transform.TransformDirection(moveDirection) * Speed * Time.deltaTime);
-        playerVelocity.y += Gravity * Time.deltaTime;
+        controller.Move(transform.TransformDirection(moveDirection) * Speed * deltaTime);
+        playerVelocity.y += Gravity * deltaTime;
         if (isGrounded && playerVelocity.y < 0)
             playerVelocity.y = -2f;
-        controller.Move(playerVelocity * Time.deltaTime);
+        controller.Move(playerVelocity * deltaTime);
     }
 
     public void Jump()
     {
         if (isGrounded)
         {
-            playerVelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * Gravity);
+            playerVelocity.y = Mathf.Sqrt(JumpHeight * -3.0f * Gravity);
         }
     }
 }

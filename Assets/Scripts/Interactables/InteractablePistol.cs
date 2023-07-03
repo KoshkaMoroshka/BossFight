@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class InteractablePistol : Interactable
 {
     private void Start()
@@ -6,6 +8,6 @@ public class InteractablePistol : Interactable
     }
     protected override void Interact()
     {
-        
+        Debug.Log("pistol");
     }
 }
