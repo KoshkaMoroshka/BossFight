@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerInteractable : MonoBehaviour
 {
     [SerializeField] private Transform _camera;
-    [SerializeField] private float _distance = 3f;
+    [SerializeField] private float _distance = 5f;
     [SerializeField] private LayerMask _mask;
 
     private Interactable selectedObj;
