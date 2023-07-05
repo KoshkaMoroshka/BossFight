@@ -10,10 +10,10 @@ public abstract class Interactable : MonoBehaviour
         protected set { _nameInteractable = value; }
     }
 
-    public void BaseInteract()
+    public void BaseInteract(GameObject obj)
     {
-        Interact();
+        Interact(obj);
     }
 
-    protected virtual void Interact() { }
+    protected virtual void Interact(GameObject obj) { }
 }

@@ -8,7 +8,8 @@ public class InputManager : MonoBehaviour
     private PlayerMovement movement;
     private PlayerLook look;
     private PlayerInteractable interact;
-    // Start is called before the first frame update
+    private PlayerInventory inventory;
+
     private void Awake()
     {
         PlayerInput = new PlayerActions();
@@ -17,12 +18,13 @@ public class InputManager : MonoBehaviour
         movement = GetComponent<PlayerMovement>();
         look = GetComponent<PlayerLook>();
         interact = GetComponent<PlayerInteractable>();
+        inventory = GetComponent<PlayerInventory>();
 
         onFoot.Jump.performed += ctx => movement.Jump();
-        onFoot.Interact.performed += ctx => interact.Interact();
+        onFoot.Interact.performed += ctx => interact.Interact(gameObject);
+        onFoot.Fire.performed += ctx => inventory.ShootCurrentWeapon();
     }
-
-    // Update is called once per frame
+    
     private void Update()
     {
         movement.ProcessMove(onFoot.Movement.ReadValue<Vector2>(), Time.deltaTime);

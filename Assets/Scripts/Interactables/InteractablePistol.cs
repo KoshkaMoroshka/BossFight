@@ -6,8 +6,9 @@ public class InteractablePistol : Interactable
     {
         Name = "pistol";
     }
-    protected override void Interact()
+    protected override void Interact(GameObject obj)
     {
-        Debug.Log("pistol");
+        obj.GetComponent<PlayerInventory>().GetWeaponInArms(Name);
+        Destroy(gameObject);
     }
 }

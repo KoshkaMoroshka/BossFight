@@ -20,9 +20,9 @@ public class PlayerInteractable : MonoBehaviour
             selectedObj = null;
     }
 
-    public void Interact()
+    public void Interact(GameObject obj)
     {
        if (selectedObj != null)
-            selectedObj.BaseInteract();
+            selectedObj.BaseInteract(obj);
     }
 }

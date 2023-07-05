@@ -873,7 +873,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 726e329e1719c8f42949342e6a5b42e3, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 726e329e1719c8f42949342e6a5b42e3, type: 3}
@@ -1737,7 +1737,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 8.07
-  Gravity: -13.74
+  Gravity: -62
   JumpHeight: 3
 --- !u!114 &5053216197042467250
 MonoBehaviour:
@@ -1813,6 +1813,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b92f07c07d0f0bd42bdcfc0e55d6927a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _camera: {fileID: 1148304241}
   _playersWeapon:
   - {fileID: 1604707383}
 --- !u!1 &5184360753525903834

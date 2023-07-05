@@ -4,16 +4,34 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> _playersWeapon;
-    // Start is called before the first frame update
-    private void Start()
+    [SerializeField] private Transform _camera;
+    [SerializeField] private List<AbstractWeapon> _playersWeapon;
+
+    private AbstractWeapon currentWeaponInArms;
+
+    public void ShootCurrentWeapon()
     {
-        
+        if (currentWeaponInArms == null)
+            return;
+        currentWeaponInArms.BaseShoot(_camera);
     }
 
-    // Update is called once per frame
-    private void Update()
+    public void GetWeaponInArms(string nameInteractableObj)
     {
-        
+        foreach (var weapon in _playersWeapon)
+        {
+            if (weapon.Name == nameInteractableObj)
+            {
+                currentWeaponInArms = weapon;
+                weapon.gameObject.SetActive(true);
+                return;
+            }                
+        }
+    }
+
+    public void SetupPlayersWeapon()
+    {
+        foreach (var weapon in _playersWeapon)
+            weapon.SetupGun();
     }
 }
