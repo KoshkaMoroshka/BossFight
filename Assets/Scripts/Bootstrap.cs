@@ -7,5 +7,6 @@ public class Bootstrap : MonoBehaviour
     private void Start()
     {
         Application.targetFrameRate = 60;
+        Cursor.visible = false;
     }
 }
