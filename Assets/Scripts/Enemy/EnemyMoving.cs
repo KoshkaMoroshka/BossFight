@@ -10,6 +10,11 @@ public class EnemyMoving : MonoBehaviour
     [SerializeField] private List<Transform> _leftUpperPoints;
     [SerializeField] private List<Transform> _rightUpperPoints;
 
+    [SerializeField] private float _speed = 5f;
+    [SerializeField] private float _rotationSpeedPerSecond = 90f;
+    [SerializeField] private Transform _player;
+    
+
     [Range(0, 1)]
     private float t;
     private Transform startPoint;
@@ -28,13 +33,15 @@ public class EnemyMoving : MonoBehaviour
 
     private void Update()
     {
+        
         if (start)
         {
-            transform.position = Vector3.MoveTowards(transform.position, endPoint.position, 2f);
+            transform.position = Vector3.MoveTowards(transform.position, endPoint.position, _speed * Time.deltaTime);
+            RotateObject();
             if (Vector3.Distance(transform.position, endPoint.position) < 1)
             {
                 start = false;
-                GetNewPoint();
+                GetNewEndPoint();
             }
             return;
         }
@@ -43,18 +50,17 @@ public class EnemyMoving : MonoBehaviour
         {
             var point = BezierDirection.GetPoint(startPoint.position, upperPoint1.position, upperPoint2.position, endPoint.position, t);
             transform.position = point;
-            transform.rotation = Quaternion.LookRotation(point);
-            t += t >= 1 ? 0 : 0.1f * Time.deltaTime;
-            if (Vector3.Distance(transform.position, endPoint.position) < 0.1)
-            {
-                t = 0;
-                GetNewPoint();
-            }
+            t += t >= 1 ? 0 : _speed * Time.deltaTime * 0.05f;
+        }
+        else
+        {
+            RotateObject();
         }
     }
 
-    private void GetNewPoint()
+    public void GetNewEndPoint()
     {
+        t = 0;
         startPoint = endPoint;
         endPoint = GetRandomNewEndPoint(endPoint);
         UpdateUpperPoints(startPoint);
@@ -78,5 +84,12 @@ public class EnemyMoving : MonoBehaviour
             return _rightStayPoints[Random.Range(0, _rightStayPoints.Count - 1)];
         else
             return _leftStayPoints[Random.Range(0, _rightStayPoints.Count - 1)];
+    }
+    private void RotateObject()
+    {
+        float degreesPerSecond = _rotationSpeedPerSecond * Time.deltaTime;
+        Vector3 direction = _player.position - transform.position;
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, degreesPerSecond);
     }
 }
