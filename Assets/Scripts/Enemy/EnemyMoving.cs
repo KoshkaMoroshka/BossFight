@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +11,6 @@ public class EnemyMoving : MonoBehaviour
 
     [SerializeField] private float _speed = 5f;
     [SerializeField] private float _rotationSpeedPerSecond = 90f;
-    [SerializeField] private Transform _player;
     
 
     [Range(0, 1)]
@@ -21,6 +19,7 @@ public class EnemyMoving : MonoBehaviour
     private Transform upperPoint1;
     private Transform upperPoint2;
     private Transform endPoint;
+    private Transform player;
 
     private bool start = true;
 
@@ -29,11 +28,11 @@ public class EnemyMoving : MonoBehaviour
         startPoint = _leftStayPoints[0];
         endPoint = startPoint;
         t = 0;
+        player = gameObject.GetComponent<Enemy>().GetPlayerTransform();
     }
 
     private void Update()
     {
-        
         if (start)
         {
             transform.position = Vector3.MoveTowards(transform.position, endPoint.position, _speed * Time.deltaTime);
@@ -88,7 +87,7 @@ public class EnemyMoving : MonoBehaviour
     private void RotateObject()
     {
         float degreesPerSecond = _rotationSpeedPerSecond * Time.deltaTime;
-        Vector3 direction = _player.position - transform.position;
+        Vector3 direction = player.position - transform.position;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, degreesPerSecond);
     }
