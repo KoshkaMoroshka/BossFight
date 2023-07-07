@@ -11,16 +11,21 @@ public class EnemyLazer : MonoBehaviour
     private bool isAttack;
     private Enemy infoEnemy;
     private bool laserReady;
+    private LineRenderer lineRenderer;
 
     private void Start()
     {
         infoEnemy = gameObject.GetComponent<Enemy>();
         isAttack = false;
         laserReady = false;
+
+        lineRenderer = _startLazerPoint.GetComponent<LineRenderer>();
+        lineRenderer.enabled = false;
     }
 
     private void Update()
     {
+        lineRenderer.SetPosition(0, _startLazerPoint.transform.position);
         if (isAttack && infoEnemy.IsAnimationPlaying("Base Layer.AttackOneArm"))
         {
             StartCoroutine(AccumulateLaser());
@@ -29,10 +34,11 @@ public class EnemyLazer : MonoBehaviour
 
         if (laserReady)
         {
+            lineRenderer.enabled = true;
             Debug.DrawLine(_startLazerPoint.transform.position, infoEnemy.GetPlayerTransform().position, Color.red);
-            if (Physics.Raycast(_startLazerPoint.transform.position, infoEnemy.GetPlayerTransform().position, out RaycastHit hit, 100f))
+            if (Physics.Raycast(_startLazerPoint.transform.position, (infoEnemy.GetPlayerTransform().position - _startLazerPoint.transform.position).normalized, out RaycastHit hit, 1000f))
             {
-                Debug.Log(hit.transform.name);
+                lineRenderer.SetPosition(1, hit.transform.position);
             }
         }
     }
@@ -47,6 +53,7 @@ public class EnemyLazer : MonoBehaviour
     {
         yield return new WaitForSeconds(_fireLaserTime);
         laserReady = false;
+        lineRenderer.enabled = false;
         infoEnemy.AnimatorBoss.SetBool("Attack", false);
     }
 

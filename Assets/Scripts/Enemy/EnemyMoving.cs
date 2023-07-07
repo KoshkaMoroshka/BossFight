@@ -22,6 +22,7 @@ public class EnemyMoving : MonoBehaviour
     private Transform player;
 
     private bool start = true;
+    private bool testLaser = true;
 
     private void Start()
     {
@@ -54,6 +55,11 @@ public class EnemyMoving : MonoBehaviour
         else
         {
             RotateObject();
+            if (testLaser)
+            {
+                GetComponent<EnemyLazer>().AttackLaser();
+                testLaser = false;
+            }
         }
     }
 
