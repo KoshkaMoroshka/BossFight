@@ -38,7 +38,7 @@ public class EnemyLazer : MonoBehaviour
             Debug.DrawLine(_startLazerPoint.transform.position, infoEnemy.GetPlayerTransform().position, Color.red);
             if (Physics.Raycast(_startLazerPoint.transform.position, (infoEnemy.GetPlayerTransform().position - _startLazerPoint.transform.position).normalized, out RaycastHit hit, 1000f))
             {
-                lineRenderer.SetPosition(1, hit.transform.position);
+                lineRenderer.SetPosition(1, hit.point);
             }
         }
     }

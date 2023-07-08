@@ -22,9 +22,9 @@ public class Enemy : MonoBehaviour
     }
     public bool IsAnimationPlaying(string animationName)
     {
-        // берем информацию о состоянии
+        // Р±РµСЂРµРј РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ СЃРѕСЃС‚РѕСЏРЅРёРё
         var animatorStateInfo = AnimatorBoss.GetCurrentAnimatorStateInfo(0);
-        // смотрим, есть ли в нем имя какой-то анимации, то возвращаем true
+        // СЃРјРѕС‚СЂРёРј, РµСЃС‚СЊ Р»Рё РІ РЅРµРј РёРјСЏ РєР°РєРѕР№-С‚Рѕ Р°РЅРёРјР°С†РёРё, С‚Рѕ РІРѕР·РІСЂР°С‰Р°РµРј true
         if (animatorStateInfo.IsName(animationName))
             return true;
 
