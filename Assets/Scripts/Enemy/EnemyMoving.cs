@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -57,10 +58,16 @@ public class EnemyMoving : MonoBehaviour
             RotateObject();
             if (testLaser)
             {
-                GetComponent<EnemyLazer>().AttackLaser();
+                StartCoroutine(KEKW());
                 testLaser = false;
             }
         }
+    }
+
+    private IEnumerator KEKW()
+    {
+        yield return new WaitForSeconds(4f);
+        GetComponent<SpineRocketEnemy>().StartFireRockets();
     }
 
     public void GetNewEndPoint()
