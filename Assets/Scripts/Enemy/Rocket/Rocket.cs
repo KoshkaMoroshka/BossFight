@@ -7,8 +7,6 @@ public class Rocket : MonoBehaviour
     private float speedRocket;
     private Transform player;
     private Transform flightPoint;
-    private Vector3 directionFlight;
-    private Vector3 directionPlayer;
     private Vector3 positionPlayerLast;
     private bool startFollowPlayer = false;
 
@@ -38,6 +36,14 @@ public class Rocket : MonoBehaviour
         flightPoint = direction;
         this.speedRocket = speedRocket;
         player = playerPosition;
+    }
+
+    public void SetupRocket(Transform playerPosition, float speedRocket)
+    {
+        player = playerPosition;
+        positionPlayerLast = player.position;
+        this.speedRocket = speedRocket;
+        startFollowPlayer = true;
     }
 
     private void OnCollisionEnter(Collision collision)

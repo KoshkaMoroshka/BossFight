@@ -18,9 +18,9 @@ public class SpineRocketEnemy : MonoBehaviour
         infoEnemy = GetComponent<Enemy>();
     }
 
-    private IEnumerator SpawnRocket(float spawnRockets, Transform leftPoint, Transform rightPoint)
+    private IEnumerator SpawnRocket(float spawnDelayRockets, Transform leftPoint, Transform rightPoint)
     {
-        yield return new WaitForSeconds(spawnRockets);
+        yield return new WaitForSeconds(spawnDelayRockets);
         var leftRocket = Instantiate(_rocket, _spawnRockets[0].position, Quaternion.identity);
         leftRocket.GetComponent<Rocket>().SetupRocket(leftPoint, _speedRockets, infoEnemy.GetPlayerTransform()); ;
         var rightRocket = Instantiate(_rocket, _spawnRockets[1].position, Quaternion.identity);
