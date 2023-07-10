@@ -66,8 +66,8 @@ public class EnemyMoving : MonoBehaviour
 
     private IEnumerator KEKW()
     {
-        yield return new WaitForSeconds(4f);
-        GetComponent<SpineRocketEnemy>().StartFireRockets();
+        yield return new WaitForSeconds(3f);
+        GetComponent<EnemyRocketAttack>().AttackTwoArms();
     }
 
     public void GetNewEndPoint()
