@@ -9,13 +9,19 @@ public class Rocket : MonoBehaviour
     private Transform flightPoint;
     private Vector3 positionPlayerLast;
     private bool startFollowPlayer = false;
+    private bool followPlayer = true;
 
     // Update is called once per frame
     private void Update()
     {
         if (startFollowPlayer)
         {
-            transform.position = Vector3.MoveTowards(transform.position, positionPlayerLast + new Vector3(0, -2.5f, 0), speedRocket * 2f * Time.deltaTime); 
+            if (followPlayer)
+            {
+                if (Physics.Raycast(transform.position, (player.position - transform.position).normalized, out RaycastHit hit, LayerMask.GetMask("Field")))
+                    positionPlayerLast = hit.point;
+            }
+            transform.position = Vector3.MoveTowards(transform.position, positionPlayerLast, speedRocket * 2f * Time.deltaTime); 
             transform.LookAt(positionPlayerLast);
             return;
         } else
@@ -26,6 +32,7 @@ public class Rocket : MonoBehaviour
             {
                 positionPlayerLast = player.position;
                 startFollowPlayer = true;
+                StartCoroutine(CheckUnitPosition());
             }
             return;
         }
@@ -44,17 +51,19 @@ public class Rocket : MonoBehaviour
         positionPlayerLast = player.position;
         this.speedRocket = speedRocket;
         startFollowPlayer = true;
+        StartCoroutine(CheckUnitPosition());
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!collision.gameObject.TryGetComponent(out Enemy enemy) || !collision.gameObject.TryGetComponent(out Rocket rocket))
-            Destroy(gameObject);
+        if (collision.gameObject.TryGetComponent(out Enemy enemy) || collision.gameObject.TryGetComponent(out Rocket rocket))
+            return;
+        Destroy(gameObject);
     }
 
     private IEnumerator CheckUnitPosition()
     {
-        yield return new WaitForSeconds(3f);
-        //followPlayer = false;
+        yield return new WaitForSeconds(1.5f);
+        followPlayer = false;
     }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1258,7 +1258,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1048631
+    m_Bits: 1048759
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -4484,8 +4484,6 @@ GameObject:
   - component: {fileID: 1995512573329664388}
   - component: {fileID: 1692938167464973274}
   - component: {fileID: 2999569829497083079}
-  - component: {fileID: 5184360753525903835}
-  - component: {fileID: 5184360753525903836}
   - component: {fileID: 5184360753525903837}
   m_Layer: 0
   m_Name: Millipede Tunnel 01.003
@@ -4494,32 +4492,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &5184360753525903835
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5184360753525903834}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 0.01, y: 0.01, z: 0.08114711}
-  m_Center: {x: 0.183, y: 0.023, z: 0.01}
---- !u!65 &5184360753525903836
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5184360753525903834}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 0.012, y: 0.01, z: 0.08114711}
-  m_Center: {x: 0.3094, y: -0.024, z: 0.01}
 --- !u!64 &5184360753525903837
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4546,7 +4518,7 @@ GameObject:
   - component: {fileID: 8010243299479276751}
   - component: {fileID: 5479488597716601004}
   - component: {fileID: 8010243299479276758}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Main Field
   m_TagString: Untagged
   m_Icon: {fileID: 0}
