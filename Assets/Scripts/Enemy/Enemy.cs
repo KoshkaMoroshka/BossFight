@@ -5,6 +5,7 @@ public class Enemy : MonoBehaviour
     public Animator AnimatorBoss { get; private set; }
 
     [SerializeField] private Transform _player;
+    [SerializeField] private RoboArm _roboArm;
 
     private void Start()
     {
@@ -29,5 +30,10 @@ public class Enemy : MonoBehaviour
             return true;
 
         return false;
+    }
+
+    public RoboArm GetRoboArm()
+    {
+        return _roboArm;
     }
 }
