@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class WeakPoint : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private GameObject _objectWeakPoint;
+    [SerializeField] private float _coeffDamage;
+    [SerializeField] private float _healtPoint = 100f;
+    
 
     // Update is called once per frame
     void Update()
