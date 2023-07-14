@@ -26,7 +26,6 @@ public class RoboArm : MonoBehaviour
 
     private void Start()
     {
-        line = gameObject.GetComponent<LineRenderer>();
         weakPoints = new List<WeakPoint>();
     }
 
@@ -41,9 +40,10 @@ public class RoboArm : MonoBehaviour
             var positionInAir = new Vector3(_player.position.x, _upperPoint.position.y, _player.position.z);
             transform.position = Vector3.MoveTowards(transform.position, positionInAir, _speedArm * Time.deltaTime);
             //transform.LookAt(_player);
-            Vector3 direction = transform.position - _enemy.transform.position;
-
-            transform.eulerAngles = new Vector3(0, direction.y, -90);
+            Vector3 direction = _enemy.transform.position - _player.position;
+            transform.rotation = Quaternion.LookRotation(direction);
+            transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, -90);
+            
         }
         else
         {
@@ -57,9 +57,9 @@ public class RoboArm : MonoBehaviour
 
     private IEnumerator PrepareAttack()
     {
-        yield return new WaitForSeconds(3f);
-        transform.position = _upperPoint.position;
-        inAir = true;
+        yield return new WaitForSeconds(5f);
+        line.enabled = true;
+        gameObject.layer = LayerMask.NameToLayer("RoboArm");
         StartCoroutine(StartAttack());
     }
 
@@ -73,7 +73,7 @@ public class RoboArm : MonoBehaviour
 
     private IEnumerator EndAttack()
     {
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(8f);
         _enemy.AnimatorBoss.SetBool("Attack", false);
         gameObject.active = false;
         _damageZone.active = false;
@@ -82,6 +82,7 @@ public class RoboArm : MonoBehaviour
             Destroy(weakPoint.gameObject);
         }
         weakPoints.Clear();
+        _enemy.IsAction = false;
     }
 
     private void SpawnWeakPoints()
@@ -91,6 +92,7 @@ public class RoboArm : MonoBehaviour
             float t = Mathf.Lerp(0f, 1f, (float)i / (CountWeakPoints - 1));
             Vector3 spawnPosition = Vector3.Lerp(_startLine.position, transform.position, t);
             var obj = Instantiate(_weakPoint, spawnPosition, Quaternion.identity);
+            obj.GetComponent<WeakPoint>().SetupMissle(_enemy);
             weakPoints.Add(obj.GetComponent<WeakPoint>());
         }
         _damageZone.active = true;
@@ -108,8 +110,14 @@ public class RoboArm : MonoBehaviour
     public void StartAttackArm()
     {
         _enemy.AnimatorBoss.SetBool("Attack", true);
-        armDamage = true;
+        transform.position = _upperPoint.position;
         gameObject.active = true;
+        inAir = true;
+        _enemy.IsAction = true;
+        armDamage = true;
+        line = gameObject.GetComponent<LineRenderer>();
+        line.enabled = false;
+        gameObject.layer = LayerMask.NameToLayer("Invisible");
         StartCoroutine(PrepareAttack());
     }
 }

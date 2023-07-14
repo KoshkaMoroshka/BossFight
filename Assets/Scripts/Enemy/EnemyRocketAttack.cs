@@ -18,10 +18,12 @@ public class EnemyRocketAttack : MonoBehaviour
 
     public void AttackTwoArms()
     {
+        infoEnemy.IsAction = true;
         infoEnemy.AnimatorBoss.SetBool("AttackTwoArms", true);
         StartCoroutine(DelaySpawnRockets(2.3f));
         StartCoroutine(DelaySpawnRockets(3.3f));
         StartCoroutine(DelaySpawnRockets(4.3f));
+        StartCoroutine(EndAnimation());
     }
 
     // Start is called before the first frame update
@@ -33,9 +35,15 @@ public class EnemyRocketAttack : MonoBehaviour
         var rightRocket = Instantiate(_rocket, _rightSpawnRockets.position, Quaternion.identity);
         rightRocket.GetComponent<Rocket>().SetupRocket(infoEnemy.GetPlayerTransform(), 20f);
         _countShoots--;
+    }
+
+    private IEnumerator EndAnimation()
+    {
+        yield return new WaitForSeconds(8);
         if (_countShoots <= 0)
         {
             infoEnemy.AnimatorBoss.SetBool("AttackTwoArms", false);
+            infoEnemy.IsAction = false;
         }
     }
 }

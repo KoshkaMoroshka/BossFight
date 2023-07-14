@@ -23,7 +23,7 @@ public class EnemyMoving : MonoBehaviour
     private Transform player;
 
     private bool start = true;
-    private bool testLaser = true;
+    private bool inLastPoint = true;
 
     private void Start()
     {
@@ -37,6 +37,7 @@ public class EnemyMoving : MonoBehaviour
     {
         if (start)
         {
+            gameObject.GetComponent<Enemy>().IsAction = true;
             transform.position = Vector3.MoveTowards(transform.position, endPoint.position, _speed * Time.deltaTime);
             RotateObject();
             if (Vector3.Distance(transform.position, endPoint.position) < 1)
@@ -56,22 +57,18 @@ public class EnemyMoving : MonoBehaviour
         else
         {
             RotateObject();
-            if (testLaser)
+            if (gameObject.GetComponent<Enemy>().IsAction && inLastPoint)
             {
-                StartCoroutine(KEKW());
-                testLaser = false;
+                gameObject.GetComponent<Enemy>().IsAction = false;
+                inLastPoint = false;
             }
         }
     }
 
-    private IEnumerator KEKW()
-    {
-        yield return new WaitForSeconds(3f);
-        GetComponent<Enemy>().GetRoboArm().StartAttackArm();
-    }
-
     public void GetNewEndPoint()
     {
+        gameObject.GetComponent<Enemy>().IsAction = true;
+        inLastPoint = true;
         t = 0;
         startPoint = endPoint;
         endPoint = GetRandomNewEndPoint(endPoint);
@@ -103,5 +100,9 @@ public class EnemyMoving : MonoBehaviour
         Vector3 direction = player.position - transform.position;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, degreesPerSecond);
+    }
+    public bool IsStartEnemy()
+    {
+        return start;
     }
 }

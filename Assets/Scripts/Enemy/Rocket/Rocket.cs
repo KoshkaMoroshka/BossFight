@@ -22,8 +22,8 @@ public class Rocket : MonoBehaviour
                 if (Physics.Raycast(transform.position, (player.position - transform.position).normalized, out RaycastHit hit, LayerMask.GetMask("Field")))
                     positionPlayerLast = hit.point;
             }
-            transform.position = Vector3.MoveTowards(transform.position, positionPlayerLast, speedRocket * 2f * Time.deltaTime); 
-            transform.LookAt(positionPlayerLast);
+            transform.position = Vector3.MoveTowards(transform.position, positionPlayerLast + new Vector3(0, -4, 0), speedRocket * 2f * Time.deltaTime); 
+            transform.LookAt(positionPlayerLast + new Vector3(0, -4, 0));
             return;
         } else
         {
@@ -57,7 +57,7 @@ public class Rocket : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.TryGetComponent(out Enemy enemy) || collision.gameObject.TryGetComponent(out Rocket rocket))
+        if (collision.gameObject.TryGetComponent(out Enemy enemy))
             return;
         if (collision.gameObject.TryGetComponent<PlayerHP>(out var playerHP))
         {

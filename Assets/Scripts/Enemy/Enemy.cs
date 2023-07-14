@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamagable
 {
+    public bool IsAction = true;
     public Animator AnimatorBoss { get; private set; }
 
     [SerializeField] private Transform _player;
@@ -19,8 +20,8 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         if (_enemyHP <= 0 && isAlive)
         {
+            GetComponent<EnemyController>().DisableComponents();
             AnimatorBoss.SetTrigger("Broken");
-            AnimatorBoss.ResetTrigger("Broken");
             isAlive = false;
         }
     }

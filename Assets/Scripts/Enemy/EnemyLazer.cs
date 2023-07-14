@@ -59,11 +59,13 @@ public class EnemyLazer : MonoBehaviour
         laserReady = false;
         lineRenderer.enabled = false;
         infoEnemy.AnimatorBoss.SetBool("Attack", false);
+        infoEnemy.IsAction = false;
     }
 
     public void AttackLaser() 
     {
         infoEnemy.AnimatorBoss.SetBool("Attack", true);
         isAttack = true;
+        infoEnemy.IsAction = true;
     }
 }

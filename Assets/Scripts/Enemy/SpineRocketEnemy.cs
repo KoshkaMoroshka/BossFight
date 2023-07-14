@@ -10,6 +10,7 @@ public class SpineRocketEnemy : MonoBehaviour
     [SerializeField] private List<Transform> _secondPointsRockets;
     [SerializeField] private List<Transform> _thirdPointsRockets;
     [SerializeField] private float _speedRockets = 5f;
+    private int waveRocket = 3;
 
     private Enemy infoEnemy;
 
@@ -25,10 +26,14 @@ public class SpineRocketEnemy : MonoBehaviour
         leftRocket.GetComponent<Rocket>().SetupRocket(leftPoint, _speedRockets, infoEnemy.GetPlayerTransform()); ;
         var rightRocket = Instantiate(_rocket, _spawnRockets[1].position, Quaternion.identity);
         rightRocket.GetComponent<Rocket>().SetupRocket(rightPoint, _speedRockets, infoEnemy.GetPlayerTransform());
+        waveRocket -= 1;
+        if (waveRocket <= 0)
+            infoEnemy.IsAction = false;
     }
 
     public void StartFireRockets()
     {
+        infoEnemy.IsAction = true;
         StartCoroutine(SpawnRocket(0, _firstPointsRockets[0].transform, _firstPointsRockets[1].transform));
         StartCoroutine(SpawnRocket(3, _secondPointsRockets[0].transform, _secondPointsRockets[1].transform));
         StartCoroutine(SpawnRocket(7, _thirdPointsRockets[0].transform, _thirdPointsRockets[1].transform));
