@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyLazer : MonoBehaviour
 {
-    [SerializeField] private float _damage;
+    [SerializeField] private float _damage = 0.5f;
     [SerializeField] private float _accumulationLaserTime = 3f;
     [SerializeField] private float _fireLaserTime = 4f;
     [SerializeField] private GameObject _startLazerPoint;
@@ -39,6 +39,10 @@ public class EnemyLazer : MonoBehaviour
             if (Physics.Raycast(_startLazerPoint.transform.position, (infoEnemy.GetPlayerTransform().position - _startLazerPoint.transform.position).normalized, out RaycastHit hit, 1000f))
             {
                 lineRenderer.SetPosition(1, hit.point);
+                if (hit.collider.gameObject.TryGetComponent<PlayerHP>(out var playerHP))
+                {
+                    playerHP.GetDamage(_damage);
+                }
             }
         }
     }

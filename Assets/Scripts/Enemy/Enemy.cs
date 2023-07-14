@@ -1,11 +1,14 @@
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IDamagable
 {
     public Animator AnimatorBoss { get; private set; }
 
     [SerializeField] private Transform _player;
     [SerializeField] private RoboArm _roboArm;
+    [SerializeField] private float _enemyHP = 700f;
+
+    private bool isAlive = true;
 
     private void Start()
     {
@@ -14,7 +17,12 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        
+        if (_enemyHP <= 0 && isAlive)
+        {
+            AnimatorBoss.SetTrigger("Broken");
+            AnimatorBoss.ResetTrigger("Broken");
+            isAlive = false;
+        }
     }
 
     public Transform GetPlayerTransform()
@@ -35,5 +43,10 @@ public class Enemy : MonoBehaviour
     public RoboArm GetRoboArm()
     {
         return _roboArm;
+    }
+
+    public void GetDamage(float damage)
+    {
+        _enemyHP -= damage;
     }
 }

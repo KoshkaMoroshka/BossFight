@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Rocket : MonoBehaviour
 {
+    [SerializeField] private float _damageRocket = 5f;
     private float speedRocket;
     private Transform player;
     private Transform flightPoint;
@@ -58,6 +59,10 @@ public class Rocket : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out Enemy enemy) || collision.gameObject.TryGetComponent(out Rocket rocket))
             return;
+        if (collision.gameObject.TryGetComponent<PlayerHP>(out var playerHP))
+        {
+            playerHP.GetDamage(_damageRocket);
+        }
         Destroy(gameObject);
     }
 

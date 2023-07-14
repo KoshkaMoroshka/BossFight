@@ -14,7 +14,15 @@ public class WeaponPistol : AbstractWeapon
     {
         if (Physics.Raycast(camera.position, camera.forward, out RaycastHit hit, _distance))
         {
-            Debug.Log(hit.transform.name);
+            var obj = hit.collider.gameObject;
+            if (obj.TryGetComponent<Enemy>(out var enemy))
+            {
+                enemy.GetDamage(_damage);
+            }
+            if (obj.TryGetComponent<WeakPoint>(out var weakPoint))
+            {
+                weakPoint.GetDamage(_damage);
+            }
         }
     }
 }
