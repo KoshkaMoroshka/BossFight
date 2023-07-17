@@ -22,8 +22,12 @@ public class Rocket : MonoBehaviour
                 if (Physics.Raycast(transform.position, (player.position - transform.position).normalized, out RaycastHit hit, LayerMask.GetMask("Field")))
                     positionPlayerLast = hit.point;
             }
-            transform.position = Vector3.MoveTowards(transform.position, positionPlayerLast + new Vector3(0, -4, 0), speedRocket * 2f * Time.deltaTime); 
-            transform.LookAt(positionPlayerLast + new Vector3(0, -4, 0));
+            transform.position = Vector3.MoveTowards(transform.position, positionPlayerLast + new Vector3(0, -1f, 0), speedRocket * 2f * Time.deltaTime); 
+            transform.LookAt(positionPlayerLast + new Vector3(0, -2.5f, 0));
+            if (Vector3.Distance(transform.position, positionPlayerLast) < 0.01f)
+            {
+                Destroy(gameObject);
+            }
             return;
         } else
         {
@@ -68,7 +72,7 @@ public class Rocket : MonoBehaviour
 
     private IEnumerator CheckUnitPosition()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(3f);
         followPlayer = false;
     }
 }

@@ -32,15 +32,15 @@ public class RoboArm : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        line.SetPosition(0, _startLine.transform.position);
-        line.SetPosition(1, transform.position);
+        //line.SetPosition(0, _startLine.transform.position);
+        //line.SetPosition(1, transform.position);
 
         if (inAir)
         {
             var positionInAir = new Vector3(_player.position.x, _upperPoint.position.y, _player.position.z);
             transform.position = Vector3.MoveTowards(transform.position, positionInAir, _speedArm * Time.deltaTime);
             //transform.LookAt(_player);
-            Vector3 direction = _enemy.transform.position - _player.position;
+            Vector3 direction = _player.position - _enemy.transform.position;
             transform.rotation = Quaternion.LookRotation(direction);
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, -90);
             

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour, IDamagable
 {
@@ -8,19 +9,24 @@ public class Enemy : MonoBehaviour, IDamagable
     [SerializeField] private Transform _player;
     [SerializeField] private RoboArm _roboArm;
     [SerializeField] private float _enemyHP = 700f;
+    [SerializeField] private Slider _slider;
 
     private bool isAlive = true;
 
     private void Start()
     {
+        _slider.maxValue = _enemyHP;
+        _slider.value = _enemyHP;
         AnimatorBoss = GetComponent<Animator>();
     }
 
     private void Update()
     {
+        _slider.value = _enemyHP;
         if (_enemyHP <= 0 && isAlive)
         {
             GetComponent<EnemyController>().DisableComponents();
+            transform.position += new Vector3(0, -1f, 0);
             AnimatorBoss.SetTrigger("Broken");
             isAlive = false;
         }

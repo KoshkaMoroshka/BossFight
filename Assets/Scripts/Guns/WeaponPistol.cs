@@ -17,7 +17,7 @@ public class WeaponPistol : AbstractWeapon
             var obj = hit.collider.gameObject;
             if (obj.TryGetComponent<Enemy>(out var enemy))
             {
-                enemy.GetDamage(_damage);
+                enemy.GetDamage(_damage/10);
             }
             if (obj.TryGetComponent<WeakPoint>(out var weakPoint))
             {
