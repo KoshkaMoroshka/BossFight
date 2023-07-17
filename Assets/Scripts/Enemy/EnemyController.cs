@@ -15,6 +15,7 @@ public class EnemyController : MonoBehaviour
 
     private bool readyNextAction = true;
     private int lastRandom = 1;
+    private int lastLastRandom = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -55,11 +56,12 @@ public class EnemyController : MonoBehaviour
     }
     private void ActionInSightEnemy()
     {
-        var action = Random.Range(1, 5);
-        while (action == lastRandom)
+        var action = Random.Range(1, 6);
+        while (action == lastRandom || action == lastLastRandom)
         {
-            action = Random.Range(1, 5);
+            action = Random.Range(1, 6);
         }
+        lastLastRandom = lastRandom;
         lastRandom = action;
 
         switch (action)
@@ -73,19 +75,21 @@ public class EnemyController : MonoBehaviour
             case 3:
                 armAttack.StartAttackArm();
                 break;
-            case 4
-            :
+            case 4:
                 spineRocketAttack.StartFireRockets();
+                break;
+            case 5:
+                moving.GetNewEndPoint();
                 break;
         }
     }
 
     private void ActionNotSightEnemy()
     {
-        var action = Random.Range(1, 4);
+        var action = Random.Range(1, 3);
         while (action == lastRandom)
         {
-            action = Random.Range(1, 4);
+            action = Random.Range(1, 3);
         }
         lastRandom = action;
         switch (action)
@@ -95,9 +99,6 @@ public class EnemyController : MonoBehaviour
                 break;
             case 2:
                 armAttack.StartAttackArm();
-                break;
-            case 3:
-                spineRocketAttack.StartFireRockets();
                 break;
         }
     }

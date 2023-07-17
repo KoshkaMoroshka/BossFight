@@ -22,12 +22,9 @@ public class Rocket : MonoBehaviour
                 if (Physics.Raycast(transform.position, (player.position - transform.position).normalized, out RaycastHit hit, LayerMask.GetMask("Field")))
                     positionPlayerLast = hit.point;
             }
-            transform.position = Vector3.MoveTowards(transform.position, positionPlayerLast + new Vector3(0, -1f, 0), speedRocket * 2f * Time.deltaTime); 
-            transform.LookAt(positionPlayerLast + new Vector3(0, -2.5f, 0));
-            if (Vector3.Distance(transform.position, positionPlayerLast) < 0.01f)
-            {
-                Destroy(gameObject);
-            }
+            transform.position = Vector3.MoveTowards(transform.position, positionPlayerLast + new Vector3(0, -2f, 0), speedRocket * 2f * Time.deltaTime); 
+            transform.LookAt(positionPlayerLast + new Vector3(0, -2f, 0));
+            
             return;
         } else
         {
@@ -63,10 +60,13 @@ public class Rocket : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out Enemy enemy))
             return;
+
         if (collision.gameObject.TryGetComponent<PlayerHP>(out var playerHP))
         {
             playerHP.GetDamage(_damageRocket);
+            Destroy(gameObject);
         }
+
         Destroy(gameObject);
     }
 

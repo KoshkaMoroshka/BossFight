@@ -32,8 +32,8 @@ public class RoboArm : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        //line.SetPosition(0, _startLine.transform.position);
-        //line.SetPosition(1, transform.position);
+        line.SetPosition(0, _startLine.transform.position);
+        line.SetPosition(1, transform.position);
 
         if (inAir)
         {
